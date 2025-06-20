@@ -1,0 +1,152 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mcp-universal-framework"
+version = "1.0.0"
+description = "Universal framework for MCP server development - extracted patterns from real-world servers"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+keywords = ["mcp", "model-context-protocol", "framework", "server", "development"]
+authors = [
+  { name = "MCP Universal Framework Team" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Software Development :: Code Generators",
+]
+
+dependencies = [
+  "httpx>=0.25.0",
+  "pydantic>=2.0.0",
+  "python-dotenv>=1.0.0",
+  "pyyaml>=6.0",
+  "jinja2>=3.1.0",
+  "click>=8.0.0",
+  "rich>=13.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.0.0",
+  "pytest-asyncio>=0.21.0",
+  "black>=23.0.0",
+  "mypy>=1.5.0",
+  "ruff>=0.1.0",
+]
+mcp = [
+  "mcp>=0.1.0",
+  "fastmcp>=0.1.0",
+]
+all = [
+  "mcp-universal-framework[dev,mcp]",
+]
+
+[project.urls]
+Homepage = "https://github.com/mcp-universal-framework/mcp-universal-framework"
+Documentation = "https://github.com/mcp-universal-framework/mcp-universal-framework#readme"
+Repository = "https://github.com/mcp-universal-framework/mcp-universal-framework.git"
+Issues = "https://github.com/mcp-universal-framework/mcp-universal-framework/issues"
+
+[project.scripts]
+mcp-framework = "mcp_framework.cli:main"
+
+[tool.hatch.version]
+path = "src/mcp_framework/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp_framework"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/src",
+  "/templates",
+  "/examples",
+  "/docs",
+  "/tests",
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py39"]
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.nox
+  | \.pants.d
+  | \.pytype
+  | \.ruff_cache
+  | \.svn
+  | \.tox
+  | \.venv
+  | __pypackages__
+  | _build
+  | buck-out
+  | build
+  | dist
+  | node_modules
+  | venv
+)/
+'''
+
+[tool.ruff]
+target-version = "py39"
+line-length = 100
+select = [
+  "E",  # pycodestyle errors
+  "W",  # pycodestyle warnings
+  "F",  # pyflakes
+  "I",  # isort
+  "B",  # flake8-bugbear
+  "C4", # flake8-comprehensions
+  "UP", # pyupgrade
+]
+ignore = [
+  "E501", # line too long, handled by black
+  "B008", # do not perform function calls in argument defaults
+  "C901", # too complex
+]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.mypy]
+python_version = "3.9"
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+no_implicit_optional = true
+show_error_codes = true
+strict_equality = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q"
+testpaths = [
+  "tests",
+]
+asyncio_mode = "auto"
