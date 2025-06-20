@@ -10,18 +10,6 @@ This framework extracts patterns from production MCP servers including:
 """
 
 __version__ = "1.0.0"
-- Rocky Linux AI Project (Build automation/CI-CD)
-
-Key Features:
-- Unified server interface for both FastMCP and traditional SDK
-- Standardized authentication patterns
-- Configuration management with multiple sources
-- Comprehensive error handling
-- Tool and resource registration patterns
-- Natural language processing utilities
-"""
-
-__version__ = "1.0.0"
 __author__ = "MCP Framework Team"
 
 # Core exports
@@ -29,7 +17,6 @@ from .core import (
     BaseMCPServer,
     FastMCPWrapper,
     SDKWrapper,
-    create_server,
     ToolDefinition
 )
 
@@ -44,41 +31,44 @@ from .auth import (
 
 from .config import (
     ConfigLoader,
-    ServerConfig,
-    APIConfig,
-    ConfigValidator,
-    create_server_config,
-    create_api_config,
-    CommonConfigs
+    ServerConfig
 )
 
 from .errors import (
+    ErrorHandler,
     MCPError,
     ValidationError,
-    AuthenticationError,
-    APIError,
-    TimeoutError,
-    ToolError,
-    ConfigurationError,
-    ErrorHandler,
-    ErrorResponse,
-    ErrorCode,
-    create_error_handler,
-    CommonErrors
+    AuthenticationError
 )
 
-# Convenience aliases for common patterns
-Server = create_server
-Auth = create_auth_provider
-Config = ConfigLoader
-Errors = CommonErrors
+from .service_oriented import (
+    ServiceOrientedMCPServer,
+    BaseService,
+    PlatformService,
+    ContentGeneratorService,
+    AnalyticsService,
+    SchedulerService
+)
+
+from .nlp_utils import (
+    ContentRequestProcessor,
+    RequirementsProcessor,
+    IntentClassifier,
+    standardize_response_format
+)
+
+from .templates.typescript_service import TypeScriptServiceTemplate
+from .templates.base import BaseTemplate
 
 __all__ = [
+    # Version info
+    "__version__",
+    "__author__",
+    
     # Core components
     "BaseMCPServer",
     "FastMCPWrapper", 
     "SDKWrapper",
-    "create_server",
     "ToolDefinition",
     
     # Authentication
@@ -92,29 +82,28 @@ __all__ = [
     # Configuration
     "ConfigLoader",
     "ServerConfig",
-    "APIConfig", 
-    "ConfigValidator",
-    "create_server_config",
-    "create_api_config",
-    "CommonConfigs",
     
     # Error handling
+    "ErrorHandler",
     "MCPError",
     "ValidationError",
     "AuthenticationError",
-    "APIError",
-    "TimeoutError",
-    "ToolError",
-    "ConfigurationError",
-    "ErrorHandler",
-    "ErrorResponse", 
-    "ErrorCode",
-    "create_error_handler",
-    "CommonErrors",
     
-    # Convenience aliases
-    "Server",
-    "Auth",
-    "Config",
-    "Errors"
+    # Service-oriented architecture
+    "ServiceOrientedMCPServer",
+    "BaseService",
+    "PlatformService",
+    "ContentGeneratorService", 
+    "AnalyticsService",
+    "SchedulerService",
+    
+    # Natural language processing
+    "ContentRequestProcessor",
+    "RequirementsProcessor",
+    "IntentClassifier",
+    "standardize_response_format",
+    
+    # Templates
+    "TypeScriptServiceTemplate",
+    "BaseTemplate",
 ]
